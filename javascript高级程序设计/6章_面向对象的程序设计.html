@@ -65,7 +65,15 @@
 			<dd>
 				<strong>3.原型模式 ：</strong>
 				构造函数在被实例化的时候，原型会被指向实例上，原型被各实例共享，数据共享！<br/>
-				<span class="success">实例中可以覆盖原型中的属性，但不是重写</span>
+				<span class="danger">实例中可以覆盖原型中的属性，但不是重写</span>
+				<dl>
+					<dt class="danger">tips:</dt>
+					<dd>a.in 操作符  会包含实例和原型中的属性</dd>
+					<dd>b.Object.keys 只包含构造函数中的属性</dd>
+					<dd>c.使用prototype={}的方式，相当于重写了prototype，导致prototype.constructor指向了Object,而不是默认的构造函数<br/>
+					除非使用prototype.a=a的方式定义，才不会重写constructor
+					</dd>
+				</dl>
 			</dd>
 
 			<script>
@@ -74,6 +82,7 @@
 
 					}
 					Person.prototype={
+						constructor:Person,//由于重写了prototype 需要重新指定
 						name:"wangyu",
 						options:["a","b"]
 					}
@@ -88,10 +97,12 @@
 					p1.options=[1];
 					//此处是在实例上重写属性，覆盖原型属性，但并没有重写原型中的属性
 					console.log("p1--p2",p1.options,p2.options);
+					console.log("Object.keys p1--p2",Object.keys(p1),Object.keys(p2),"options" in p1);
 					
 					delete p1.options;
 					console.log("p1--p2",p1.options,p2.options);
 
+					console.log(Person.prototype.constructor);
 				})();
 			</script>
 		</dl>
