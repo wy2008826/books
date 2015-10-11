@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象的程序设计</title>
+	<link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+	<section>
+		<dl>
+			<dt>关于对象方法是在Object上调用还是实例上调用的问题</dt>
+			<dd>譬如：Object.defineProperty 直接在o={}上就没法调用</dd>
+			<dd>那是因为defineProperty定义在Object的构造函数上，而不是原型上，做如下处理即可：</dd>
+			<dd>
+				Object.prototype.defineProperty=Object.defineProperty;
+			</dd>
+		</dl>
+	</section>
+	<script>
+		var o={};
+		//o.defineProperty(o,"name",{value:"wangyu"});//报错  defineProperty  不是一个函数
+
+		//作如下处理  可以看出defineProperty定义在构造函数上而不是原型上
+		Object.prototype.defineProperty=Object.defineProperty;
+
+		var o1={};
+		o.defineProperty(o,"name",{value:"wangyu"});
+		console.log(o);
+	</script>
+	
+	<section>
+		<dl>
+			<dt>创建对象</dt>
+			<dd>
+				<strong>1.工厂模式：</strong>创建一个函数，可以无限调用，返回一个特定的对象。<br/>
+				其本质上其实就是一个函数！
+			</dd>
+
+			<dd>
+				<strong>2.构造函数模式:</strong>当做普通函数执行的时候，this会指向window，属性会挂载在window上<br/>
+				使用new生成的时候，属性会挂载到实例对象上<br>
+				<dl>
+					<dt class="danger">问题：</dt>
+					<dd>a.每次实例化，属性都会复制一遍，值和地址引用都一样，多次实例导致内存占用过多</dd>
+				</dl>
+				
+			</dd>
+			<script>
+				(function(){
+					function Person(){
+						this.name="wangyu";
+						this.options=["hanghzou","nanyang"];
+					}
+
+					Person();
+					console.log("Person---",window.name);
+
+					var wy1=new Person();
+					var wy2=new Person();
+					wy1.options.push("test");//改变了一个实例的属性不会影响其它实例
+					console.log("wy1--wy2",wy1.options,wy2.options);
+				})();
+				
+			</script>
+			<dd>
+				<strong>3.原型模式 ：</strong>
+				构造函数在被实例化的时候，原型会被指向实例上，原型被各实例共享，数据共享！<br/>
+				<span class="success">实例中可以覆盖原型中的属性，但不是重写</span>
+			</dd>
+
+			<script>
+				(function(){
+					function Person(){
+
+					}
+					Person.prototype={
+						name:"wangyu",
+						options:["a","b"]
+					}
+
+					var p1=new Person();
+					var p2=new Person();
+					
+
+					p1.options.push("c");//此处是修改原型中的数据
+					console.log("p1--p2",p1.options,p2.options);
+
+					p1.options=[1];
+					//此处是在实例上重写属性，覆盖原型属性，但并没有重写原型中的属性
+					console.log("p1--p2",p1.options,p2.options);
+					
+					delete p1.options;
+					console.log("p1--p2",p1.options,p2.options);
+
+				})();
+			</script>
+		</dl>
+
+	</section>
+
+</body>
+</html>
