@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第三章--函数</title>
+	<link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+	<h4 class="success">
+		函数被调用时，都会创建this和argumennts参数，this的指向取决于调用的模式，<br/>
+		四种调用模式：1 方法调用模式 2.函数调用模式 3.构造函数调用模式 4.apply调用模式<br/>
+		这些模式决定了this在初始化时候的差异！
+	</h4>
+	<section>
+		<dl>
+			<dt>函数的四种调用方式</dt>
+			<dd>
+				<strong>1.方法调用方式</strong>
+				函数挂载到对象上，就成为方法;this指向直接调用者,执行环境的最近一层！
+			</dd>
+
+			<script>
+				var o={
+					a:1,
+					fun:function(){
+						console.log(this.a);
+					},
+					b:{
+						a:2,
+						fun:function(){
+							console.log(this.a);
+						}
+					}
+				};
+
+				o.fun();//this指向o
+				o.b.fun();//this指向o.b
+			</script>
+		</dl>
+	</section>
+</body>
+</html>
