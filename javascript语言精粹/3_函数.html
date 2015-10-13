@@ -16,25 +16,54 @@
 			<dt>函数的四种调用方式</dt>
 			<dd>
 				<strong>1.方法调用方式</strong>
-				函数挂载到对象上，就成为方法;this指向直接调用者,执行环境的最近一层！
+				函数挂载到对象上，就成为方法;this指向直接调用者,执行环境的最近一层！<br>
+				但当函数被单独执行的时候，this会指向全局window
 			</dd>
 
 			<script>
-				var o={
-					a:1,
-					fun:function(){
-						console.log(this.a);
-					},
-					b:{
-						a:2,
+				(function(){
+					var o={
+						a:1,
 						fun:function(){
 							console.log(this.a);
+						},
+						b:{
+							a:2,
+							fun:function(){
+								console.log(this.a);
+							}
 						}
-					}
-				};
+					};
 
-				o.fun();//this指向o
-				o.b.fun();//this指向o.b
+					o.fun();//this指向o
+					o.b.fun();//this指向o.b
+
+					var test=o.b.fun;
+					test();//函数单独执行执行的时候this会被绑定到window上面
+				})();
+				
+			</script>
+			<dd>
+				<strong>2.函数调用模式</strong>
+				函数单独执行会将this指向到window上，解决办法就是在函数外部将this作用于进行保存
+			</dd>
+			<script>
+				(function(){
+					var o={
+						a:1
+					};
+					o.outer=function(){
+						var that=this;
+						function inner(){
+							console.log(this.a);
+							console.log(that.a);
+						}
+						inner();
+					}
+
+					o.outer();
+				})();
+				
 			</script>
 		</dl>
 	</section>
