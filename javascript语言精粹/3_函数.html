@@ -58,12 +58,81 @@
 							console.log(this.a);
 							console.log(that.a);
 						}
-						inner();
+						inner();//函数被单独执行，内部this指向了window
 					}
 
 					o.outer();
 				})();
 				
+			</script>
+			<dd>
+				<strong>3.构造函数调用模式</strong>
+			</dd>
+			<dd>
+				<strong>4.apply调用模式</strong>
+				<script>
+					(function(){
+						var o1={
+							a:1
+						};
+						var o2={
+							a:2
+						};
+						function test(){
+							console.log(this.a,arguments);
+						}
+						test.apply(o2,["wangyu","xidada"]);
+
+					})();
+				</script>
+			</dd>
+		</dl>
+		<dl>
+			<dt>参数 arguments arguments包含一个length属性，且可以通过下标访问到对应的值，但是并不具备数组的方法</dt>
+			<dd>
+				函数在调用的时候会得到一个免费的参数，arguments。在函数定义的时候不需要制定参数名称<br/>
+				而在函数调用的时候可以传递对应的参数
+			</dd>
+			<script>
+				(function(){
+					function test(){
+
+						for(var i=0;i<arguments.length;i++){
+							console.log(arguments[i]);
+						}
+					}
+
+					test("arg1","arg2");
+				})();
+			</script>
+		</dl>
+		<dl>
+			<dt>级联</dt>
+			<dd>
+				在一个对象上持续进行操作 
+			</dd>
+			<script>
+				(function(){
+					var o={
+						a:1,
+						add:function(){
+							this.a+=1;
+							
+							return this;
+						},
+						decrea:function(){
+							this.a-=1;
+							return this;
+						},
+						stringify:function(){
+							this.a="string";
+							return this;
+						}
+					};
+					o.add().stringify();
+					console.log(o);
+
+				})();
 			</script>
 		</dl>
 	</section>
