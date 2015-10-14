@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>函数</title>
+	<link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+	<section>
+		<dl>
+			<dt>1.函数的四种调用方式（在语言精粹的函数一节已有说明）</dt>
+			<dd>
+				<strong>严格模式下this指向问题</strong>
+				<p>函数作为函数调用执行的时候，在非严格模式下，this会指向window，在严格模式下会指向undefined</p>
+				<p>
+					可以用来判定当前环境是否是严格模式
+				</p>
+			</dd>
+			<script>
+				(function(){
+					function isStrict(){
+						return !this==true?true:false;
+					}
+
+					function isStrict1(){
+						"use strict";
+						return !this==true?true:false;
+					}
+
+					console.log(isStrict(),isStrict1());
+				})();
+			</script>
+
+		</dl>
+	</section>
+</body>
+</html>
