@@ -40,6 +40,12 @@
 
 					var test=o.b.fun;
 					test();//函数单独执行执行的时候this会被绑定到window上面
+
+
+
+					var o1={a:"haha"};
+					o1.fun=o.b.fun;
+					o1.fun();
 				})();
 				
 			</script>
@@ -106,6 +112,9 @@
 				})();
 			</script>
 		</dl>
+
+
+
 		<dl>
 			<dt>级联</dt>
 			<dd>
@@ -136,5 +145,8 @@
 			</script>
 		</dl>
 	</section>
+
+
+
 </body>
 </html>
